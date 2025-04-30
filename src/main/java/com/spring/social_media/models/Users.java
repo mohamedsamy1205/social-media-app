@@ -1,6 +1,8 @@
 package com.spring.social_media.models;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -34,4 +36,19 @@ public class Users {
     @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<MediaFile> mediaFile;
+
+    @ManyToMany
+    @JsonBackReference
+    @JoinTable(
+        name = "user_following",
+        joinColumns = @JoinColumn(name = "follower_id"),
+        inverseJoinColumns = @JoinColumn(name = "following_id")
+    )
+    @Builder.Default
+    private Set<Users> following = new HashSet<>();
+    @ManyToMany(mappedBy = "following")
+    @JsonBackReference
+    @Builder.Default
+    private Set<Users> followers = new HashSet<>();
+
 }
