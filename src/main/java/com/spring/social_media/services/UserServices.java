@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import com.spring.social_media.config.CustomUserDetails;
 import com.spring.social_media.jwt.JwtUtil;
 import com.spring.social_media.models.Users;
+import com.spring.social_media.models.notification.Notification;
+import com.spring.social_media.repository.NotificationsRepository;
 import com.spring.social_media.repository.UserRepositry;
 import com.spring.social_media.side_classes.LoginRequest;
 import com.spring.social_media.side_classes.UserRequest;
@@ -28,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 public class UserServices {
     @Autowired
     private UserRepositry userRepository;
+    @Autowired
+    private NotificationsRepository notificationRepository;
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -78,6 +82,11 @@ public class UserServices {
 
         follower.getFollowing().add(following);
         userRepository.save(follower);
+        
+        Notification notification = new Notification();
+        notification.setUser(following); // اللي وصله الفولو
+        notification.setMassage(follower.getUsername() + " started following you!");
+        notificationRepository.save(notification);
     }
 
     public void unfollowUser(Long followerId, Long followingId) {
@@ -108,6 +117,16 @@ public class UserServices {
 
     public int getFollowingCount(Users user) {
         return user.getFollowing().size();
+    }
+    
+    public boolean isFollowing(Long followerId, String followingUsername) {
+        Users follower = userRepository.findById(followerId)
+                .orElseThrow(() -> new RuntimeException("Follower not found"));
+        Users following = userRepository.findByusername(
+                followingUsername)
+                .orElseThrow(() -> new RuntimeException("Following not found"));
+
+        return follower.getFollowing().contains(following);
     }
 
 

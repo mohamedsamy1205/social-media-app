@@ -79,6 +79,15 @@ public class UserController {
         int followingCount = userService.getFollowingCount(user);
         return ResponseEntity.ok(followingCount);
     }
+    
+    @GetMapping("/users/{followerId}/is-following/{followingId}")
+    public ResponseEntity<Boolean> isFollowing(
+            @PathVariable Long followerId,
+            @PathVariable String followingUsername) {
+
+        boolean result = userService.isFollowing(followerId, followingUsername);
+        return ResponseEntity.ok(result);
+    }
 
 
 }

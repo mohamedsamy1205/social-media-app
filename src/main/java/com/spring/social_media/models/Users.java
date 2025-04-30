@@ -1,10 +1,12 @@
 package com.spring.social_media.models;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.spring.social_media.models.notification.Notification;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,5 +52,9 @@ public class Users {
     @JsonBackReference
     @Builder.Default
     private Set<Users> followers = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    @Builder.Default
+    private List<Notification> notifications = new ArrayList<>();
 
 }
