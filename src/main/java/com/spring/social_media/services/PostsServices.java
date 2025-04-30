@@ -66,7 +66,7 @@ public class PostsServices {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // تحقق انه صاحب البوست أو أدمن
-        if (!post.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+        if (!post.getUserModel().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
             throw new RuntimeException("You are not authorized to update this post");
         }
 

@@ -43,7 +43,7 @@ public class MediaFile {
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "username", referencedColumnName = "username")
-    private Users users;
+    private Users userModel;
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "comments_id", referencedColumnName = "id")

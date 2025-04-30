@@ -41,7 +41,7 @@ public class Posts {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "username",referencedColumnName = "username", insertable = false, updatable = false)
-    private Users user;
+    private Users userModel;
     @OneToMany(mappedBy = "posts")
     private List<MediaFile> mediaFile;
     @OneToMany(mappedBy = "posts")

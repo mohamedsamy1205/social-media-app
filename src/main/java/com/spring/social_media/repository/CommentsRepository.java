@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.spring.social_media.models.reaction.Comments;
 
 public interface CommentsRepository extends JpaRepository<Comments , Long> {
-    Optional<Comments> findByPostIdAndUserId(Long postId, Long userId);
+    Optional<Comments> findByPostsIdAndUsersId(Long postId, Long userId);
 }

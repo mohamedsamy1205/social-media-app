@@ -29,7 +29,7 @@ public class ReactionService {
         Posts post = postsRepositry.findById(PostId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + PostId));
 
-        Reactions reactions = reactionRepository.findByPostIdAndUserId(PostId, UserId).orElse(Reactions.builder()
+        Reactions reactions = reactionRepository.findByPostsIdAndUserModelId(PostId, UserId).orElse(Reactions.builder()
                 .userModel(user)
                 .posts(post)
                 .build());

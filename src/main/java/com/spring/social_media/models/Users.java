@@ -31,9 +31,9 @@ public class Users {
     private String role;
     private String name;
     @JsonBackReference
-    @OneToMany(mappedBy = "userModel" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userModel" )
     private List<Posts> posts;
-    @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userModel")
     @JsonBackReference
     private List<MediaFile> mediaFile;
 

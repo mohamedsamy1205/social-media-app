@@ -2,12 +2,17 @@ package com.spring.social_media.models.reaction;
 
 
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.spring.social_media.models.MediaFile;
 import com.spring.social_media.models.Posts;
 import com.spring.social_media.models.Users;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -24,7 +29,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comments {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String commentText;
     private byte[] data;
@@ -37,5 +43,5 @@ public class Comments {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users users;
     @OneToMany(mappedBy = "comments")
-    private MediaFile mediaFile;
+    private List<MediaFile> mediaFile;
 }
