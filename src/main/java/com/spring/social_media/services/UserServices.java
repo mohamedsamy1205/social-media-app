@@ -35,6 +35,7 @@ public class UserServices {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // private String imageType;
     public void signIn(UserRequest u) throws IOException {
         userRepository.save(Users.builder()
             .username(u.getUsername())
@@ -42,7 +43,8 @@ public class UserServices {
             .name(u.getName())
             .role(u.getRole())
             .image(u.getImage().getBytes())
-            .build());
+                .build());
+            
     }
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
@@ -59,7 +61,7 @@ public class UserServices {
                     "username", userModel.getUsername(),
                     "name", userModel.getName(),
                     "role", userModel.getRole(),
-                    "image", userModel.getImage(),
+                    // "image", userModel.getImage(),
                     "token", jwt));
 
         } catch (BadCredentialsException ex) {
@@ -70,6 +72,7 @@ public class UserServices {
     public byte[] getUserImage(Long id) {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        
         return user.getImage();
         
     }
