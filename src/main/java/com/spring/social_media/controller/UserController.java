@@ -38,11 +38,10 @@ public class UserController {
         return userService.login(loginRequest);
     }
     @GetMapping("/userpic/{userId}")
-    public ResponseEntity<?> getUserImage(@PathVariable Long userId) {
-        
-        return ResponseEntity.ok()
-                .header("Content-Type", "image/jpeg")
-                .body(userService.getUserImage(userId));
+    public ResponseEntity<?> getUserImage(@PathVariable Long userId) throws IOException {
+       return ResponseEntity.ok()
+               .header("Content-Type", "image/jpeg")
+               .body(userService.getUserImage(userId));
     }
     
 
