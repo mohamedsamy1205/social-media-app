@@ -20,11 +20,13 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String massage;
+    private String message;
     private boolean isRead = false;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user; 
+    private Users user;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }
+
+

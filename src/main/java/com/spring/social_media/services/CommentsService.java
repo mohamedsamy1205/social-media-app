@@ -18,9 +18,12 @@ public class CommentsService {
     private PostsRepositry postsRepositry;
     @Autowired
     private UserRepositry usersRepositry;
+    @Autowired
+    private NotificitionServise notificitionServise;
 
     public void addComment(Long postId, Long userId, String comment) {
         Posts post = postsRepositry.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        Users userOfPost = usersRepositry.findByusername(post.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         Users user = usersRepositry.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Comments newComment = commentsRepository.findByPostsIdAndUsersId(postId, userId).orElse(Comments.builder()
                 .posts(post)
@@ -28,6 +31,7 @@ public class CommentsService {
                 .build());
         newComment.setCommentText(comment);
         newComment.setPosts(post);
+        notificitionServise.SendNotification( user.getName()+"New comment on your post", userOfPost);
     }
 
     public void deleteComment(Long commentId) {

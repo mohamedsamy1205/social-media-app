@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.social_media.models.Users;
 import com.spring.social_media.models.notification.Notification;
-import com.spring.social_media.repository.NotificationsRepository;
-import com.spring.social_media.repository.UserRepositry;
 import com.spring.social_media.services.NotificitionServise;
 
 @RestController
@@ -21,10 +18,6 @@ import com.spring.social_media.services.NotificitionServise;
 public class NotificationController {
     @Autowired
     private NotificitionServise notificitionServise;
-    @Autowired
-    private NotificationsRepository notificationRepository;
-    @Autowired
-    private UserRepositry userRepository;
 
 
     @PutMapping("/notifications/{notificationId}/mark-as-read")
@@ -35,10 +28,7 @@ public class NotificationController {
 
     @GetMapping("/users/{userId}/notifications")
     public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable Long userId) {
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        List<Notification> notifications = notificationRepository.findByUserOrderByCreatedAtDesc(user);
+        List<Notification> notifications = notificitionServise.getUserNotifications(userId);
         return ResponseEntity.ok(notifications);
     }
 }
