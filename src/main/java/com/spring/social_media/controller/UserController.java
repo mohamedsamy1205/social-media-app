@@ -19,8 +19,9 @@ import com.spring.social_media.services.UserServices;
 import com.spring.social_media.side_classes.LoginRequest;
 import com.spring.social_media.side_classes.UserRequest;
 
+
 @RestController
-@RequestMapping("/api/v1/reactions")
+@RequestMapping("/api/v1/users")
 public class UserController {
     @Autowired
     private UserServices userService;
@@ -36,6 +37,14 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         return userService.login(loginRequest);
     }
+    @GetMapping("/userpic/{userId}")
+    public ResponseEntity<?> getUserImage(@PathVariable Long userId) {
+        
+        return ResponseEntity.ok()
+                .header("Content-Type", "image/jpeg")
+                .body(userService.getUserImage(userId));
+    }
+    
 
     @PostMapping("/{followerId}/follow/{followingId}")
     public ResponseEntity<String> followUser(@PathVariable Long followerId, @PathVariable String followingUsername) {

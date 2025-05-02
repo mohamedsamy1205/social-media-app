@@ -28,7 +28,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain (HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authRequest ->{
-            authRequest.requestMatchers("/h2-console/**" , "/user/**").permitAll();
+            authRequest.requestMatchers("/api/v1/users/sign-in" , "/api/v1/users/login").permitAll();
             authRequest.anyRequest().authenticated();
             
         });

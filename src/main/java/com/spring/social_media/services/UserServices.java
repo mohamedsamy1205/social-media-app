@@ -67,7 +67,12 @@ public class UserServices {
         }
     }
     
-
+    public byte[] getUserImage(Long id) {
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getImage();
+        
+    }
 
 
 
@@ -90,6 +95,7 @@ public class UserServices {
 
         follower.getFollowing().remove(following);
         userRepository.save(follower);
+        notificitionServise.SendNotification(follower.getName() + " stopped following you!", following);
     }
 
     public Set<Users> getFollowers(Long userId) {
