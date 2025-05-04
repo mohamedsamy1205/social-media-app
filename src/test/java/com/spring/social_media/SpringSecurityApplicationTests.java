@@ -1,4 +1,4 @@
-package com.spring.spring_security;
+package com.spring.social_media;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
