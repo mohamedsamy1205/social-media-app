@@ -37,6 +37,10 @@ public class UserServices {
 
     // private String imageType;
     public void signIn(UserRequest u) throws IOException {
+
+        if (u.getImage().isEmpty()) {
+            u.setImage(null);
+        }
         userRepository.save(Users.builder()
             .username(u.getUsername())
             .password(u.getPassword())

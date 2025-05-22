@@ -25,7 +25,7 @@ public class Users {
     private Long id;
     @Column(name = "username", unique = true)
     private String username;
-    @Column(name = "passeord", unique = true)
+    @Column(name = "password")
     private String password;
     @Lob
     @Column(name = "image", length = 100000)

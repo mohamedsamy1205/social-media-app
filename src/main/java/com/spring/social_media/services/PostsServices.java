@@ -43,7 +43,6 @@ public class PostsServices {
             MediaFile mediaFile = new MediaFile();
             mediaFile.setFilename(file.getOriginalFilename());
             mediaFile.setContentType(file.getContentType());
-            mediaFile.setSize(file.getSize());
             mediaFile.setData(file.getBytes());
             mediaFile.setPosts(post); // Set the post for the media file
             files.add(mediaFile);

@@ -32,7 +32,6 @@ public class MediaFile {
     private Long id;
     private String filename;
     private String contentType;
-    private Long size;
     @Lob
     @Column(name = "file_data", length = 1000000)
     private byte[] data;
