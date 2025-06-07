@@ -2,7 +2,7 @@ package com.spring.social_media.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+// import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,17 +26,19 @@ public class PostsServices {
     private PostsRepositry postsRepositry;
     @Autowired
     private UserRepositry userRepositry;
-    @Autowired
-    private UserServices userServices;
+    // @Autowired
+    // private UserServices userServices;
     @Autowired
     private MediaRepository mediarepo;
-    @Autowired
-    private NotificitionServise notificitionServise;
+    // @Autowired
+    // private NotificitionServise notificitionServise;
 
     public void savePostes(PostRequest p) throws IOException{
         Posts post = new Posts();
         post.setTitle(p.getTitle());
-        post.setUsername(p.getUsername());
+        post.setUserId(p.getUser());
+        Users user = userRepositry.findById(p.getUser()).orElseThrow(() -> new RuntimeException("User not found"));
+        post.setUsername(user.getUsername());
 
         List<MediaFile> files = new ArrayList<>();
         for (MultipartFile file : p.getFiles()) {
@@ -50,12 +52,14 @@ public class PostsServices {
         post.setMediaFile(files);
         postsRepositry.save(post); // Set the media files for the post
         mediarepo.saveAll(files);
-        Users user = userRepositry.findByusername(p.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
-        Set<Users> users = userServices.getFollowers(user.getId());
+        // Users user = userRepositry.findById(p.getUser()).orElseThrow(() -> new
+        // RuntimeException("User not found"));
+        // Set<Users> users = userServices.getFollowers(user.getId());
 
-        for (Users follower : users) {
-            notificitionServise.SendNotification(user.getName() + " posted a new post", follower);
-        }
+        // for (Users follower : users) {
+        // notificitionServise.SendNotification(user.getName() + " posted a new post",
+        // follower);
+        // }
  
         
     }
@@ -88,8 +92,9 @@ public class PostsServices {
     public List<Posts> findall() {
         return postsRepositry.findAll();
     }
-    public List<Posts> find(String username) {
-        return postsRepositry.findByusername(username);
+
+    public List<Posts> find(Long id) {
+        return postsRepositry.findByUserId(id);
     }
 
 }

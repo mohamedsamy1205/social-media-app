@@ -26,7 +26,7 @@ public class FilesController {
 
     @PostMapping("put")
     public String postMethodName(@ModelAttribute MultipartFile file) throws IOException {
-        filesService.saveFile(file);
+        // filesService.saveFile(file);
         return "File is uploaded successfully!";
 
     }

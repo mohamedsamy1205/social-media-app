@@ -36,11 +36,13 @@ public class Posts {
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "username" )
+    @Column(name = "userid")
+    private Long userId;
+    @Column(name = "username", nullable = false)
     private String username;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "username",referencedColumnName = "username", insertable = false, updatable = false)
+    @JoinColumn(name = "userid", referencedColumnName = "id", insertable = false, updatable = false)
     private Users userModel;
     @OneToMany(mappedBy = "posts")
     private List<MediaFile> mediaFile;

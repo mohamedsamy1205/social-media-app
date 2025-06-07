@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class PostRequest {
     private String title;
-    private String username;
+    private Long user;
     private MultipartFile [] files;
 
 }

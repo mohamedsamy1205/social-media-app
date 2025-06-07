@@ -15,6 +15,7 @@ import com.spring.social_media.side_classes.UpdatePostRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/api/v1/reactions")
+@RequestMapping("/api/v1/posts")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostsController {
     @Autowired
     private PostsServices services;
@@ -65,9 +67,9 @@ public class PostsController {
 
 
     @GetMapping("/findbyusername")
-    public List<Posts> findbyusername(@RequestParam String username) {
+    public List<Posts> findbyusername(@RequestParam Long id) {
 
-        return services.find(username);
+        return services.find(id);
     }
     @GetMapping("/delete-post")
     public String deletebyId(@RequestParam Long id) {
@@ -97,6 +99,7 @@ public class PostsController {
     @GetMapping("/findall")
     public List<Posts> findall() {
         return services.findall();
+
     }
     
 

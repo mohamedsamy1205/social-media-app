@@ -2,11 +2,14 @@ package com.spring.social_media.services;
 
 
 import java.io.IOException;
+
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,12 +17,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+
 import com.spring.social_media.config.CustomUserDetails;
 import com.spring.social_media.jwt.JwtUtil;
 import com.spring.social_media.models.Users;
 import com.spring.social_media.repository.UserRepositry;
 import com.spring.social_media.side_classes.LoginRequest;
 import com.spring.social_media.side_classes.UserRequest;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,18 +43,34 @@ public class UserServices {
     // private String imageType;
     public void signIn(UserRequest u) throws IOException {
 
-        if (u.getImage().isEmpty()) {
-            u.setImage(null);
+        // if (u.getImage().isEmpty()) {
+        // ClassPathResource resource = new ClassPathResource(
+        // "E:\\projects\\Spring boot projects\\social media
+        // App\\src\\main\\resources\\static\\user-image.png");
+        // byte[] defaultBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+        // filesService.saveFile(defaultBytes);
+        // return;
+        // }
+
+        Users user = new Users();
+        user.setUsername(u.getUsername());
+        user.setPassword(u.getPassword());
+        user.setName(u.getName());
+        user.setRole(u.getRole());
+        if (u.getImage() != null && !u.getImage().isEmpty()) {
+
+            user.setImage(u.getImage().getBytes());
+        } else {
+            ClassPathResource resource = new ClassPathResource(
+                    "static/user-image.png");
+            byte[] defaultBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+            user.setImage(defaultBytes);
+
         }
-        userRepository.save(Users.builder()
-            .username(u.getUsername())
-            .password(u.getPassword())
-            .name(u.getName())
-            .role(u.getRole())
-            .image(u.getImage().getBytes())
-                .build());
-            
+        userRepository.save(user);
+
     }
+
 
     public ResponseEntity<?> login(LoginRequest loginRequest) {
         try {

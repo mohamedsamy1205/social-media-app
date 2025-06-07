@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import com.spring.social_media.models.MediaFile;
 import com.spring.social_media.repository.MediaRepository;
@@ -15,11 +15,10 @@ public class FilesService {
     // @Autowired
     // private MediaFile mediaFile;
 
-    public MediaFile saveFile(MultipartFile file) throws IOException {
+    public MediaFile saveFile(byte[] b) throws IOException {
         MediaFile mediaFile = new MediaFile();
-        mediaFile.setFilename(file.getOriginalFilename());
-        mediaFile.setContentType(file.getContentType());
-        mediaFile.setData(file.getBytes());
+
+        mediaFile.setData(b);
 
         return mediaFileRepository.save(mediaFile);
     }

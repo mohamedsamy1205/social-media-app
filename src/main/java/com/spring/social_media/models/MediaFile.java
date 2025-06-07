@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "media")
+@Table(name = "media_file")
 @Getter
 @Setter
 @NoArgsConstructor

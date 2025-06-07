@@ -30,8 +30,8 @@ public class ReactionService {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + UserId));
         Posts post = postsRepositry.findById(PostId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + PostId));
-        Users userOfPost = userRepositry.findByusername(post.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found with username: " + post.getUsername()));
+        Users userOfPost = userRepositry.findById(post.getUserId())
+                        .orElseThrow(() -> new RuntimeException("User not found with username: " + post.getUserId()));
 
         Reactions reactions = reactionRepository.findByPostsIdAndUserModelId(PostId, UserId).orElse(Reactions.builder()
                 .userModel(user)
